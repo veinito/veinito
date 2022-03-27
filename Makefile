@@ -1,12 +1,12 @@
-ECR_REPO = 550346457415.dkr.ecr.eu-central-1.amazonaws.com/veinito
-ECR_TAG = latest
 AWS_REGION = eu-central-1
+REPO = 550346457415.dkr.ecr.${AWS_REGION}.amazonaws.com/veinito
+TAG = 3
 
 build:
-	docker build -t ${ECR_REPO}:${ECR_TAG} .
+	docker build -t ${REPO}:${TAG} .
 
 docker/login:
-	aws --region ${AWS_REGION} ecr get-login-password | docker login --username AWS --password-stdin $(ECR_REPO)
+	aws --region ${AWS_REGION} ecr get-login-password | docker login --username AWS --password-stdin ${REPO}
 
 docker/push:
-	docker push $(ECR_REPO):$(ECR_TAG)
+	docker push ${REPO}:${TAG}
